@@ -13,6 +13,7 @@ function PizzaBlock({ imageUrl, title, price, sizes, types }) {
         <ul>
           {types.map((item) => (
             <li
+              key={item}
               onClick={() => setTypeActive(item)}
               className={
                 (types.length > 1 && typeActive == item) || types.length < 2
@@ -27,6 +28,7 @@ function PizzaBlock({ imageUrl, title, price, sizes, types }) {
         <ul>
           {sizes.map((item, i) => (
             <li
+              key={i}
               onClick={() => setSizeActive(i)}
               className={sizeActive == i ? "active" : ""}
             >
