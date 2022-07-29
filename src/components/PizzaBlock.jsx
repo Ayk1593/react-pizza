@@ -14,7 +14,11 @@ function PizzaBlock({ imageUrl, title, price, sizes, types }) {
           {types.map((item) => (
             <li
               onClick={() => setTypeActive(item)}
-              className={typeActive == item ? "active" : ""}
+              className={
+                (types.length > 1 && typeActive == item) || types.length < 2
+                  ? "active"
+                  : ""
+              }
             >
               {typeNames[item]}
             </li>
