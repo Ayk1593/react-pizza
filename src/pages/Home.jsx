@@ -12,11 +12,12 @@ const Home = ({open, setOpen}) => {
         fetch("https://62e3fd42c6b56b4511801ba8.mockapi.io/pizzas")
             .then((res) => res.json())
             .then((json) => setItems(json))
-            .then(()=>setIsLoading(false))
+            .then(()=>setIsLoading(false));
+        window.scrollTo(0,0)
     }, []);
     return (
 
-        <>
+        <div className="container">
         <div className="content__top">
             <Categories />
             <Sort open={open} setOpen={setOpen} />
@@ -30,7 +31,7 @@ const Home = ({open, setOpen}) => {
             }
 
 </div>
-        </>
+        </div>
     );
 }
 

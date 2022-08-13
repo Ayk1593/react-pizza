@@ -18,14 +18,13 @@ function App() {
     <div onClick={closeSort} className="wrapper">
       <Header />
       <div className="content">
-        <div className="container">
+
             <Routes>
                 <Route path="/" element={<Home open={open} setOpen={setOpen} />}/>
                 <Route path="/cart" element={<Cart />}/>
                 <Route path="*" element={<NotFound />}/>
             </Routes>
         </div>
-      </div>
     </div>
   );
 }

@@ -6,6 +6,7 @@ function PizzaBlock({ imageUrl, name, price, sizes, types }) {
   const [sizeActive, setSizeActive] = useState(0);
 
   return (
+      <div className="pizza-block-wrapper">
     <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{name}</h4>
@@ -57,6 +58,7 @@ function PizzaBlock({ imageUrl, name, price, sizes, types }) {
         </button>
       </div>
     </div>
+      </div>
   );
 }
 
