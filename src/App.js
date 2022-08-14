@@ -18,7 +18,6 @@ function App() {
     <div onClick={closeSort} className="wrapper">
       <Header />
       <div className="content">
-
             <Routes>
                 <Route path="/" element={<Home open={open} setOpen={setOpen} />}/>
                 <Route path="/cart" element={<Cart />}/>

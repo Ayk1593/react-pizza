@@ -1,12 +1,15 @@
-import { useState } from "react";
 
-function Sort({ open, setOpen }) {
-  const list = ["популярности", "цене", "алфавиту"];
-  const [selected, setSelected] = useState(0);
-  const sortName = list[selected];
+function Sort({ open, setOpen, sortType, onChangeSort }) {
+  const list = [
+      {name: 'популярности (↑)', sortProperty: 'rating', order: 'asc'},
+      {name: 'популярности (↓)', sortProperty: 'rating', order: 'desc'},
+      {name: 'цене (↑)', sortProperty: 'price', order: 'asc' },
+      {name: 'цене (↓)', sortProperty: 'price', order: 'desc'},
+      {name: 'алфавиту (↑)', sortProperty: 'title', order: 'asc' },
+      {name: 'алфавиту (↓)', sortProperty: 'title', order: 'desc'}];
 
   const onClickListItem = (i) => {
-    setSelected(i);
+    onChangeSort(i);
     setOpen(false);
   };
 
@@ -30,7 +33,7 @@ function Sort({ open, setOpen }) {
           onClick={(e) => e.stopPropagation()}
           onClick={() => setOpen(!open)}
         >
-          {sortName}
+          {sortType.name}
         </span>
       </div>
       {open && (
@@ -39,10 +42,10 @@ function Sort({ open, setOpen }) {
             {list.map((item, i) => (
               <li
                 key={i}
-                onClick={() => onClickListItem(i)}
-                className={selected == i ? "active" : ""}
+                onClick={() => onClickListItem(item)}
+                className={sortType.name == item.name ? "active" : ""}
               >
-                {item}
+                {item.name}
               </li>
             ))}
           </ul>
