@@ -1,12 +1,12 @@
 
 function Sort({ open, setOpen, sortType, onChangeSort }) {
   const list = [
-      {name: 'популярности (↑)', sortProperty: 'rating', order: 'asc'},
-      {name: 'популярности (↓)', sortProperty: 'rating', order: 'desc'},
-      {name: 'цене (↑)', sortProperty: 'price', order: 'asc' },
-      {name: 'цене (↓)', sortProperty: 'price', order: 'desc'},
-      {name: 'алфавиту (↑)', sortProperty: 'title', order: 'asc' },
-      {name: 'алфавиту (↓)', sortProperty: 'title', order: 'desc'}];
+      {name: 'популярности ↑', sortProperty: 'rating', order: 'asc'},
+      {name: 'популярности ↓', sortProperty: 'rating', order: 'desc'},
+      {name: 'цене ↑', sortProperty: 'price', order: 'asc' },
+      {name: 'цене ↓', sortProperty: 'price', order: 'desc'},
+      {name: 'алфавиту ↑', sortProperty: 'title', order: 'asc' },
+      {name: 'алфавиту ↓', sortProperty: 'title', order: 'desc'}];
 
   const onClickListItem = (i) => {
     onChangeSort(i);
