@@ -6,12 +6,19 @@ import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
 import {useContext} from 'react';
 import {SearchContext} from "../App";
+import {useDispatch, useSelector} from "react-redux";
+import {setSearchValue} from "../redux/slices/filterSlice";
 
 const Home = ({open, setOpen, setHomeIsRender}) => {
-    const {searchValue, setSearchValue} = useContext(SearchContext)
+
+    const searchValue = useSelector((state) => state.filter.searchValue)
+    console.log(searchValue)
+    const dispatch = useDispatch()
+    // const {searchValue, setSearchValue} = useContext(SearchContext)
     useEffect(() => {
         return () => {
-            setSearchValue('')
+              dispatch(setSearchValue(''))
+            // setSearchValue('')
             setHomeIsRender(false)
         }
     }, [])
