@@ -1,11 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import styles from './Search.module.css'
 import searchIcon from '../../assets/img/Search.svg'
 import closeIcon from '../../assets/img/Close.svg'
+import {SearchContext} from "../../App";
 
 
-const Search = ({searchValue, setSearchValue, homeIsRender}) => {
-
+const Search = ({homeIsRender}) => {
+     const {searchValue, setSearchValue} = useContext(SearchContext)
     return (
         <div className={styles.root}>
             {homeIsRender && <div>

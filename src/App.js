@@ -5,8 +5,15 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import {Routes, Route} from "react-router-dom";
 import Cart from "./pages/Cart";
+import {useDispatch, useSelector} from "react-redux";
+
+
+export const SearchContext = React.createContext()
 
 function App() {
+    // const count = useSelector((state) => state.counter.value)
+    // const dispatch = useDispatch()
+
     const [open, setOpen] = useState(false);
     const [searchValue, setSearchValue] = useState('')
     const [homeIsRender, setHomeIsRender] = useState(true)
@@ -16,17 +23,17 @@ function App() {
 
     return (
         <div onClick={closeSort} className="wrapper">
-            <Header searchValue={searchValue} setSearchValue={setSearchValue} homeIsRender={homeIsRender}/>
+            <SearchContext.Provider value={{searchValue, setSearchValue}}>
+            <Header homeIsRender={homeIsRender}/>
             <div className="content">
                 <Routes>
                     <Route path="/" element={<Home open={open} setOpen={setOpen}
-                                                   searchValue={searchValue}
-                                                   setSearchValue={setSearchValue}
                                                    setHomeIsRender={setHomeIsRender}/>}/>
                     <Route path="/cart" element={<Cart/>}/>
                     <Route path="*" element={<NotFound/>}/>
                 </Routes>
             </div>
+            </SearchContext.Provider>
         </div>
     );
 }

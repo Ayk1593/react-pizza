@@ -4,11 +4,12 @@ import Sort from "../components/Sort";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
-import {useContext} from 'react';
-import {SearchContext} from "../App";
 
-const Home = ({open, setOpen, setHomeIsRender}) => {
-    const {searchValue, setSearchValue} = useContext(SearchContext)
+const Home2 = ({open, setOpen, searchValue, setSearchValue, setHomeIsRender}) => {
+    useEffect(() => {
+            console.log('home')
+    })
+
     useEffect(() => {
         return () => {
             setSearchValue('')
@@ -55,4 +56,4 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
     );
 }
 
-export default Home;
+export default Home2;
