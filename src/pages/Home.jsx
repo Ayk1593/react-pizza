@@ -7,18 +7,15 @@ import Pagination from "../components/Pagination/Pagination";
 import {useContext} from 'react';
 import {SearchContext} from "../App";
 import {useDispatch, useSelector} from "react-redux";
-import {setSearchValue} from "../redux/slices/filterSlice";
+import {setCategoryId, setSearchValue} from "../redux/slices/filterSlice";
 
 const Home = ({open, setOpen, setHomeIsRender}) => {
-
-    const searchValue = useSelector((state) => state.filter.searchValue)
-    console.log(searchValue)
     const dispatch = useDispatch()
-    // const {searchValue, setSearchValue} = useContext(SearchContext)
+    const {searchValue, categoryId, sortType} = useSelector((state) => state.filter)
+
     useEffect(() => {
         return () => {
-              dispatch(setSearchValue(''))
-            // setSearchValue('')
+            dispatch(setSearchValue(''))
             setHomeIsRender(false)
         }
     }, [])
@@ -26,8 +23,6 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
     const [currentPage, setCurrentPage] = useState(1)
     const [items, setItems] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
-    const [categoryId, setCategoryId] = useState(0);
-    const [sortType, setSortType] = useState({name: 'популярности ↑', sortProperty: 'rating', order: 'asc'});
 
     useEffect(() => {
         setHomeIsRender(true);
@@ -45,8 +40,8 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
 
         <div className="container">
             <div className="content__top">
-                <Categories categoryId={categoryId} onChangeCategory={(i) => setCategoryId(i)}/>
-                <Sort open={open} setOpen={setOpen} sortType={sortType} onChangeSort={(i) => setSortType(i)}/>
+                <Categories categoryId={categoryId} onChangeCategory={(i) => dispatch(setCategoryId(i))}/>
+                <Sort open={open} setOpen={setOpen} sortType={sortType}/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
 
@@ -57,7 +52,7 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
                 }
 
             </div>
-            <Pagination onPageChange={ number => setCurrentPage(number)} />
+            <Pagination onPageChange={number => setCurrentPage(number)}/>
         </div>
     );
 }

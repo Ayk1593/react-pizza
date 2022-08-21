@@ -1,8 +1,16 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import filterReducer from "./slices/filterSlice";
 
-export const store = configureStore({
-    reducer: {
-        filter: filterReducer,
-    },
+const rootReducer = combineReducers({
+    filter: filterReducer
 })
+
+export const store = configureStore({
+    reducer: rootReducer
+})
+
+// export const store = configureStore({
+//     reducer: {
+//         filter: filterReducer,
+//     },
+// })
