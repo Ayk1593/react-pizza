@@ -5,14 +5,10 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import {Routes, Route} from "react-router-dom";
 import Cart from "./pages/Cart";
-import {useDispatch, useSelector} from "react-redux";
-
 
 export const SearchContext = React.createContext()
 
 function App() {
-    // const count = useSelector((state) => state.counter.value)
-    // const dispatch = useDispatch()
 
     const [open, setOpen] = useState(false);
     const [searchValue, setSearchValue] = useState('')
