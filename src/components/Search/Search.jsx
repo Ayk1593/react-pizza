@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
-import styles from './Search.module.css'
+import styles from './Search.module.scss'
 import searchIcon from '../../assets/img/Search.svg'
 import closeIcon from '../../assets/img/Close.svg'
 import {useDispatch, useSelector} from "react-redux";

@@ -1,11 +1,28 @@
 import logoSvg from "../assets/img/pizza-logo.svg";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Search from "./Search/Search";
+import {useDispatch} from "react-redux";
+import {setFilters} from "../redux/slices/filterSlice";
 
 const Header = ({homeIsRender}) =>  {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const onClickLogoHomePage = () => {
+    dispatch(setFilters({
+      categoryId: 0,
+      currentPage: 1,
+      sortType: {
+        name: 'популярности ↑',
+        sortProperty: 'rating',
+        order: 'asc'
+      }
+    }))
+
+  }
   return (
     <div className="header">
       <div className="container">
+        <div onClick={onClickLogoHomePage}>
         <Link to='/'>
         <div className="header__logo">
           <img width="38" src={logoSvg} alt="Pizza logo" />
@@ -15,6 +32,7 @@ const Header = ({homeIsRender}) =>  {
           </div>
         </div>
         </Link>
+        </div>
         <Search homeIsRender={homeIsRender} />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">

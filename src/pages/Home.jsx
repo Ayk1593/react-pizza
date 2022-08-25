@@ -10,6 +10,8 @@ import axios from "axios";
 import qs from 'qs'
 import {useNavigate} from "react-router-dom";
 
+
+
 const Home = ({open, setOpen, setHomeIsRender}) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -46,10 +48,9 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
     }
     // Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
     useEffect(() => {
-            console.log('2')
             if (window.location.search) {
                 const params = qs.parse(window.location.search.substring(1))
-                const sortType = list.find(obj => (obj.sortProperty === params.sortProperty) && (obj.order === params.order))
+                const sortType = list.find(obj => (obj.sortProperty === params.sortBy) && (obj.order === params.order))
                 dispatch(
                     setFilters({
                         ...params,
@@ -63,7 +64,6 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
     )
    // Если был первый рендер, то запрашиваем пиццы
     useEffect(() => {
-        console.log('1')
         window.scrollTo(0, 0)
         if (!isSearch.current) {
             fetchPizzas()
@@ -75,7 +75,7 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
     useEffect(() => {
         if (isMounted.current) {
             const queryString = qs.stringify({
-                sortProperty: sortType.sortProperty,
+                sortBy: sortType.sortProperty,
                 order: sortType.order,
                 categoryId,
                 currentPage
@@ -83,6 +83,12 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
             navigate(`?${queryString}`)
         }
         isMounted.current = true
+    }, [categoryId, sortType, currentPage])
+
+    useEffect(() => {
+        if (categoryId === 0) {
+            navigate('')
+        }
     }, [categoryId, sortType, currentPage])
 
 
