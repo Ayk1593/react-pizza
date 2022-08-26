@@ -30,13 +30,15 @@ const Search = ({homeIsRender}) => {
     }
     return (
         <div className={styles.root}>
-            {homeIsRender && <div>
+            {homeIsRender && <div className={styles.input_container}>
                 <img className={styles.icon} src={searchIcon}/>
                 <input ref={inputRef} value={value}
                        onChange={onChangeInput}
                        className={styles.input} placeholder='Поиск пиццы ...'/>
                 {value &&
-                    <img onClick={onClickClear} className={styles.clearIcon} src={closeIcon}/>}
+                    <img onClick={onClickClear} className={styles.clearIcon} src={closeIcon}/>
+                   }
+
             </div>
             }
         </div>

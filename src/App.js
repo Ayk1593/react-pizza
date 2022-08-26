@@ -9,16 +9,12 @@ import Cart from "./pages/Cart";
 export const SearchContext = React.createContext()
 
 function App() {
-
     const [open, setOpen] = useState(false);
     const [searchValue, setSearchValue] = useState('')
     const [homeIsRender, setHomeIsRender] = useState(true)
-    const closeSort = () => {
-        open && setOpen(!open);
-    };
 
     return (
-        <div onClick={closeSort} className="wrapper">
+        <div className="wrapper">
             <SearchContext.Provider value={{searchValue, setSearchValue}}>
             <Header homeIsRender={homeIsRender}/>
             <div className="content">

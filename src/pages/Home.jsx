@@ -8,11 +8,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {setCategoryId, setCurrentPage, setFilters, setSearchValue} from "../redux/slices/filterSlice";
 import axios from "axios";
 import qs from 'qs'
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 
 
 const Home = ({open, setOpen, setHomeIsRender}) => {
+    const url = useLocation()
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const isSearch = useRef(false)
@@ -48,8 +49,9 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
     }
     // Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
     useEffect(() => {
-            if (window.location.search) {
-                const params = qs.parse(window.location.search.substring(1))
+            if (url.search) {
+
+                const params = qs.parse(url.search.substring(1))
                 const sortType = list.find(obj => (obj.sortProperty === params.sortBy) && (obj.order === params.order))
                 dispatch(
                     setFilters({
