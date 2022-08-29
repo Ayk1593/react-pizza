@@ -97,7 +97,6 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
 
 
     return (
-
         <div className="container">
             <div className="content__top">
                 <Categories categoryId={categoryId} onChangeCategory={(i) => dispatch(setCategoryId(i))}/>
