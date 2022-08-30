@@ -9,7 +9,7 @@ import {setCategoryId, setCurrentPage, setFilters, setSearchValue} from "../redu
 import axios from "axios";
 import qs from 'qs'
 import {useLocation, useNavigate} from "react-router-dom";
-
+import {fetchPizzas, setItems} from "../redux/slices/pizzasSlice";
 
 
 const Home = ({open, setOpen, setHomeIsRender}) => {
@@ -19,6 +19,7 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
     const isSearch = useRef(false)
     const isMounted = useRef(false)
     const {searchValue, categoryId, sortType, currentPage} = useSelector((state) => state.filter)
+    const {items, status} = useSelector(state => state.pizza)
 
     const onChangePage = (number) => {
         dispatch(setCurrentPage(number))
@@ -32,21 +33,15 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
         }
     }, [])
 
-    const [items, setItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true)
 
-    const fetchPizzas = () => {
-            setHomeIsRender(true);
-            setIsLoading(true);
-
-            axios.get(`https://62e3fd42c6b56b4511801ba8.mockapi.io/pizzas?page=${currentPage}&limit=4&${
-                categoryId > 0 ? `category=${categoryId}` : ''
-            }&sortBy=${sortType.sortProperty}&order=${sortType.order}&${searchValue ? `search=${searchValue}` : ''}`)
-                .then((res) =>
-                    setItems(res.data));
-            setIsLoading(false)
+    const getPizzas = async () => {
+        setHomeIsRender(true);
+        dispatch(fetchPizzas({
+            currentPage, categoryId, sortType, searchValue
+        }));
 
     }
+
     // Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
     useEffect(() => {
             if (url.search) {
@@ -64,11 +59,11 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
 
         }, []
     )
-   // Если был первый рендер, то запрашиваем пиццы
+    // Если был первый рендер, то запрашиваем пиццы
     useEffect(() => {
         window.scrollTo(0, 0)
         if (!isSearch.current) {
-            fetchPizzas()
+            getPizzas()
         }
         isSearch.current = false
     }, [categoryId, sortType, searchValue, currentPage]);
@@ -94,8 +89,6 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
     }, [categoryId, sortType, currentPage])
 
 
-
-
     return (
         <div className="container">
             <div className="content__top">
@@ -104,13 +97,23 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
             </div>
             <h2 className="content__title">Все пиццы</h2>
 
-            <div className="content__items">
-                {isLoading
-                    ? [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
-                    : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
-                }
 
-            </div>
+            {status === 'error'
+                ? (<div className='content__error-info'>
+                    <h2>Произошла ошибка <icon>😕</icon></h2>
+                    <p>
+                        К сожалению, не удалось получить пиццы.
+                        Попробуйте повторить попытку позже.
+                    </p>
+                </div>)
+                : (<div className="content__items">
+                    {status === 'loading'
+                        ? [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
+                        : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
+                    }
+
+                </div>)}
+
             <Pagination currentPage={currentPage} onPageChange={onChangePage}/>
         </div>
     );
