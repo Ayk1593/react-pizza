@@ -5,11 +5,10 @@ import Skeleton from "../components/PizzaBlock/Skeleton";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Pagination from "../components/Pagination/Pagination";
 import {useDispatch, useSelector} from "react-redux";
-import {setCategoryId, setCurrentPage, setFilters, setSearchValue} from "../redux/slices/filterSlice";
-import axios from "axios";
+import {selectFilter, setCategoryId, setCurrentPage, setFilters, setSearchValue} from "../redux/slices/filterSlice";
 import qs from 'qs'
-import {useLocation, useNavigate} from "react-router-dom";
-import {fetchPizzas, setItems} from "../redux/slices/pizzasSlice";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import {fetchPizzas, selectPizzaData, setItems} from "../redux/slices/pizzasSlice";
 
 
 const Home = ({open, setOpen, setHomeIsRender}) => {
@@ -18,8 +17,8 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
     const dispatch = useDispatch()
     const isSearch = useRef(false)
     const isMounted = useRef(false)
-    const {searchValue, categoryId, sortType, currentPage} = useSelector((state) => state.filter)
-    const {items, status} = useSelector(state => state.pizza)
+    const {searchValue, categoryId, sortType, currentPage} = useSelector(selectFilter)
+    const {items, status} = useSelector(selectPizzaData)
 
     const onChangePage = (number) => {
         dispatch(setCurrentPage(number))
@@ -45,7 +44,6 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
     // Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
     useEffect(() => {
             if (url.search) {
-
                 const params = qs.parse(url.search.substring(1))
                 const sortType = list.find(obj => (obj.sortProperty === params.sortBy) && (obj.order === params.order))
                 dispatch(
@@ -109,7 +107,7 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
                 : (<div className="content__items">
                     {status === 'loading'
                         ? [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
-                        : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
+                        : items.map((obj) => <Link  key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj} /> </Link>)
                     }
 
                 </div>)}

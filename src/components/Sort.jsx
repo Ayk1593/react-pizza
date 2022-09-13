@@ -1,5 +1,5 @@
 import {useDispatch, useSelector} from "react-redux";
-import {setSort} from "../redux/slices/filterSlice";
+import {selectSort, setSort} from "../redux/slices/filterSlice";
 import {useEffect, useRef} from "react";
 
 export const list = [
@@ -14,7 +14,7 @@ export const list = [
 function Sort({open, setOpen}) {
     const sortRef = useRef()
     const dispatch = useDispatch()
-    const sortType = useSelector(state => state.filter.sortType)
+    const sortType = useSelector(selectSort)
 
 
     const onClickListItem = (obj) => {

@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import {Routes, Route} from "react-router-dom";
 import Cart from "./pages/Cart";
+import FullPizza from "./pages/FullPizza";
+import MainLayout from "./components/layouts/MainLayout";
 
 // export const SearchContext = React.createContext()
 
@@ -13,17 +15,15 @@ function App() {
     const [homeIsRender, setHomeIsRender] = useState(true)
 
     return (
-        <div className="wrapper">
-            <Header homeIsRender={homeIsRender}/>
-            <div className="content">
-                <Routes>
-                    <Route path="/" element={<Home open={open} setOpen={setOpen}
-                                                   setHomeIsRender={setHomeIsRender}/>}/>
-                    <Route path="/cart" element={<Cart/>}/>
-                    <Route path="*" element={<NotFound/>}/>
-                </Routes>
-            </div>
-        </div>
+        <Routes>
+                <Route path="/" element={<MainLayout homeIsRender={homeIsRender}/>}>
+                <Route path="" element={<Home open={open} setOpen={setOpen}
+                                              setHomeIsRender={setHomeIsRender}/>}/>
+                <Route path="/cart" element={<Cart/>}/>
+                <Route path="/pizza/:id" element={<FullPizza/>}/>
+                <Route path="*" element={<NotFound/>}/>
+            </Route>
+        </Routes>
     );
 }
 
