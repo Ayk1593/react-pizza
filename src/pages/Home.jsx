@@ -7,11 +7,12 @@ import Pagination from "../components/Pagination/Pagination";
 import {useDispatch, useSelector} from "react-redux";
 import {selectFilter, setCategoryId, setCurrentPage, setFilters, setSearchValue} from "../redux/slices/filterSlice";
 import qs from 'qs'
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate, useSearchParams} from "react-router-dom";
 import {fetchPizzas, selectPizzaData, setItems} from "../redux/slices/pizzasSlice";
 
 
 const Home = ({open, setOpen, setHomeIsRender}) => {
+    const [searchParams, setSearchParams] = useSearchParams();
     const url = useLocation()
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -44,7 +45,14 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
     // Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
     useEffect(() => {
             if (url.search) {
-                const params = qs.parse(url.search.substring(1))
+                const params =  {
+                    currentPage: searchParams.get('currentPage'),
+                    categoryId: searchParams.get('categoryId'),
+                    sortBy: searchParams.get('sortBy'),
+                    order: searchParams.get('order')
+                }
+
+                // const params = qs.parse(url.search.substring(1))
                 const sortType = list.find(obj => (obj.sortProperty === params.sortBy) && (obj.order === params.order))
                 dispatch(
                     setFilters({
