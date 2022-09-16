@@ -107,7 +107,7 @@ const Home = ({open, setOpen, setHomeIsRender}) => {
                 : (<div className="content__items">
                     {status === 'loading'
                         ? [...new Array(6)].map((_, index) => <Skeleton key={index}/>)
-                        : items.map((obj) => <Link  key={obj.id} to={`/pizza/${obj.id}`}><PizzaBlock {...obj} /> </Link>)
+                        : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
                     }
 
                 </div>)}
